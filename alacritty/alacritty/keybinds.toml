@@ -1,0 +1,15 @@
+[[keyboard.bindings]]
+  key = "C"
+  mods = "Control|Shift"
+  action = "Copy"
+
+[[keyboard.bindings]]
+  key = "V"
+  mods = "Control|Shift"
+  action = "Paste"
+
+[selection]
+save_to_clipboard = true
+
+# [keyboard]
+# use_wayland_clipboard = true
