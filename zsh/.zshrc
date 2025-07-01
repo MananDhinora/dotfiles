@@ -9,10 +9,8 @@ SAVEHIST=10000
 setopt beep extendedglob nomatch prompt_subst
 unsetopt autocd notify
 
-# Use Vim keybindings
-bindkey -v
-
-# Key Bindings
+# Key Bindings (Emacs-like by default; remove or modify as needed)
+bindkey -e  # Emacs mode
 bindkey "^H" backward-kill-word
 bindkey "^[[3~" delete-char        # Delete key
 bindkey "^[[H" beginning-of-line   # Home key
@@ -43,24 +41,6 @@ reset="%f"
 bold="%B"
 normal="%b"
 
-# Vim mode indicator
-zle-keymap-select() {
-  case $KEYMAP in
-    vicmd) VIMODE="${red}${bold}[N]${normal}${reset}" ;;   # Normal mode
-    main|viins) VIMODE="${tokyo_purple}${bold}[I]${normal}${reset}" ;;  # Insert mode
-    *) VIMODE="${yellow}[?]${reset}" ;;  # Unknown mode
-  esac
-  zle reset-prompt
-}
-zle -N zle-keymap-select
-
-# Also catch on line init
-zle-line-init() {
-  VIMODE="${green}${bold}[I]${normal}${reset}"  # Default mode
-  zle reset-prompt
-}
-zle -N zle-line-init
-
 # Prompt Info Function
 prompt_info() {
   local curPath="${PWD/#$HOME/~}"
@@ -80,7 +60,7 @@ prompt_info() {
     fi
   fi
 
-  echo "${prompt_string}\n${VIMODE} ${pink}\$: ${reset}"
+  echo "${prompt_string}\n${pink}\$: ${reset}"
 }
 
 # Dynamic Prompt Setup
@@ -102,6 +82,11 @@ update_prompt
 
 # Aliases
 alias ls='ls --color=auto'
+alias c='clear'
+alias vim='nvim'
+alias vi='nvim'
+alias v="nvim"
+alias diff="diff --color"
 
 # Window Manager (Commented to avoid shell termination)
 if command -v uwsm &>/dev/null && uwsm check may-start; then
